@@ -1,34 +1,30 @@
 function search() {
-  const q = document.getElementById("searchInput").value.trim();
-  const resultsDiv = document.getElementById("results");
-  const history = JSON.parse(localStorage.getItem("transfers") || "[]");
-  const filtered = history.filter(op => op.serial === q || q === "");
+  const id = document.getElementById("searchInput").value.trim();
+  const currencies = JSON.parse(localStorage.getItem("currencies"));
+  const transfers = JSON.parse(localStorage.getItem("transfers"));
+  const currency = currencies.find(c => c.id === id);
 
-  if (filtered.length === 0) {
-    resultsDiv.innerHTML = "لا توجد نتائج.";
+  const resultBox = document.getElementById("resultBox");
+  if (!currency) {
+    resultBox.innerHTML = "<p style='color:red'>العملة غير موجودة</p>";
     return;
   }
 
-  let html = "<table border='1'><tr><th>رقم</th><th>من</th><th>إلى</th><th>تاريخ</th><th>رمز الموافقة</th></tr>";
-  filtered.forEach(op => {
-    html += `<tr><td>${op.serial}</td><td>${op.from}</td><td>${op.to}</td><td>${op.date}</td><td>${op.approvalCode}</td></tr>`;
-  });
-  html += "</table>";
-  resultsDiv.innerHTML = html;
-}
+  let history = transfers.filter(t => t.id === id);
+  let html = `<p>رقم العملة: ${currency.id}</p>
+              <p>الفئة: ${currency.value} ريال</p>
+              <p>المالك الحالي: ${currency.owner}</p>
+              <h3>سجل التحويلات:</h3>`;
 
-function downloadCSV() {
-  const history = JSON.parse(localStorage.getItem("transfers") || "[]");
-  if (history.length === 0) return alert("لا يوجد سجل.");
+  if (history.length === 0) {
+    html += "<p>لا يوجد تحويلات لهذه العملة.</p>";
+  } else {
+    html += "<ul>";
+    history.forEach(h => {
+      html += `<li>${h.time}: من ${h.from} إلى ${h.to} (رمز: ${h.code})</li>`;
+    });
+    html += "</ul>";
+  }
 
-  let csv = "رقم العملة,من,إلى,تاريخ,رمز الموافقة\n";
-  history.forEach(op => {
-    csv += `${op.serial},${op.from},${op.to},${op.date},${op.approvalCode}\n`;
-  });
-
-  const blob = new Blob([csv], { type: "text/csv" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "transfer_log.csv";
-  a.click();
+  resultBox.innerHTML = html;
 }
