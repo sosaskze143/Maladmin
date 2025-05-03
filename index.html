@@ -1,119 +1,46 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>نظام إدارة العملات</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>نظام إدارة العملات</h1>
-  
-  <!-- قائمة الأطراف المسموح لهم -->
-  <div>
-    <h2>الأطراف المسموح لهم بنقل الملكية</h2>
-    <ul>
-      <li>الحكومة</li>
-      <li>بيان سعد الشهراني</li>
-      <li>وجدان سعد الشهراني</li>
-      <li>محمد سعد الشهراني</li>
-    </ul>
+  <div class="container">
+    <h1>نظام إدارة العملات</h1>
+    <p>مرحبًا بك في نظام إدارة وتحويل العملات.</p>
+
+    <div class="card">
+      <h2>الوظائف المتاحة:</h2>
+      <ul>
+        <li><a href="transfer.html" class="button">نقل ملكية عملة</a></li>
+        <li><a href="search.html" class="button">البحث عن عملة</a></li>
+        <li><a href="log.html" class="button">سجل التحويلات</a></li>
+        <li><button onclick="downloadCSV()" class="button">تحميل كل السجلات CSV</button></li>
+      </ul>
+    </div>
   </div>
-  
+
   <script>
-    // بيانات العملات
-    const currencyData = {
-      // 1 ريال (10 عملات)
-      "143-00001": { value: 1, owner: "الحكومة" },
-      "143-00002": { value: 1, owner: "الحكومة" },
-      "143-00003": { value: 1, owner: "الحكومة" },
-      "143-00004": { value: 1, owner: "الحكومة" },
-      "143-00005": { value: 1, owner: "الحكومة" },
-      "143-00006": { value: 1, owner: "الحكومة" },
-      "143-00007": { value: 1, owner: "الحكومة" },
-      "143-00008": { value: 1, owner: "الحكومة" },
-      "143-00009": { value: 1, owner: "الحكومة" },
-      "143-00010": { value: 1, owner: "الحكومة" },
+    function downloadCSV() {
+      const transfers = JSON.parse(localStorage.getItem("transfers") || "[]");
+      if (transfers.length === 0) {
+        alert("لا توجد عمليات محفوظة.");
+        return;
+      }
 
-      // 5 ريال (30 عملة)
-      "143-00011": { value: 5, owner: "الحكومة" },
-      "143-00012": { value: 5, owner: "الحكومة" },
-      "143-00013": { value: 5, owner: "الحكومة" },
-      "143-00014": { value: 5, owner: "الحكومة" },
-      "143-00015": { value: 5, owner: "الحكومة" },
-      "143-00016": { value: 5, owner: "الحكومة" },
-      "143-00017": { value: 5, owner: "الحكومة" },
-      "143-00018": { value: 5, owner: "الحكومة" },
-      "143-00019": { value: 5, owner: "الحكومة" },
-      "143-00020": { value: 5, owner: "الحكومة" },
-      "143-00021": { value: 5, owner: "الحكومة" },
-      "143-00022": { value: 5, owner: "الحكومة" },
-      "143-00023": { value: 5, owner: "الحكومة" },
-      "143-00024": { value: 5, owner: "الحكومة" },
-      "143-00025": { value: 5, owner: "الحكومة" },
-      "143-00026": { value: 5, owner: "الحكومة" },
-      "143-00027": { value: 5, owner: "الحكومة" },
-      "143-00028": { value: 5, owner: "الحكومة" },
-      "143-00029": { value: 5, owner: "الحكومة" },
-      "143-00030": { value: 5, owner: "الحكومة" },
+      const header = "رقم العملة,الفئة,المالك السابق,المالك الجديد,التاريخ,رمز الموافقة\n";
+      const rows = transfers.map(t => {
+        return `${t.id},${t.value},${t.from},${t.to},${t.date},${t.code}`;
+      }).join("\n");
 
-      // 10 ريال (30 عملة)
-      "143-00031": { value: 10, owner: "الحكومة" },
-      "143-00032": { value: 10, owner: "الحكومة" },
-      "143-00033": { value: 10, owner: "الحكومة" },
-      "143-00034": { value: 10, owner: "الحكومة" },
-      "143-00035": { value: 10, owner: "الحكومة" },
-      "143-00036": { value: 10, owner: "الحكومة" },
-      "143-00037": { value: 10, owner: "الحكومة" },
-      "143-00038": { value: 10, owner: "الحكومة" },
-      "143-00039": { value: 10, owner: "الحكومة" },
-      "143-00040": { value: 10, owner: "الحكومة" },
-      "143-00041": { value: 10, owner: "الحكومة" },
-      "143-00042": { value: 10, owner: "الحكومة" },
-      "143-00043": { value: 10, owner: "الحكومة" },
-      "143-00044": { value: 10, owner: "الحكومة" },
-      "143-00045": { value: 10, owner: "الحكومة" },
-      "143-00046": { value: 10, owner: "الحكومة" },
-      "143-00047": { value: 10, owner: "الحكومة" },
-      "143-00048": { value: 10, owner: "الحكومة" },
-      "143-00049": { value: 10, owner: "الحكومة" },
-      "143-00050": { value: 10, owner: "الحكومة" },
-
-      // 50 ريال (20 عملة)
-      "143-00051": { value: 50, owner: "الحكومة" },
-      "143-00052": { value: 50, owner: "الحكومة" },
-      "143-00053": { value: 50, owner: "الحكومة" },
-      "143-00054": { value: 50, owner: "الحكومة" },
-      "143-00055": { value: 50, owner: "الحكومة" },
-      "143-00056": { value: 50, owner: "الحكومة" },
-      "143-00057": { value: 50, owner: "الحكومة" },
-      "143-00058": { value: 50, owner: "الحكومة" },
-      "143-00059": { value: 50, owner: "الحكومة" },
-      "143-00060": { value: 50, owner: "الحكومة" },
-      "143-00061": { value: 50, owner: "الحكومة" },
-      "143-00062": { value: 50, owner: "الحكومة" },
-      "143-00063": { value: 50, owner: "الحكومة" },
-      "143-00064": { value: 50, owner: "الحكومة" },
-      "143-00065": { value: 50, owner: "الحكومة" },
-      "143-00066": { value: 50, owner: "الحكومة" },
-      "143-00067": { value: 50, owner: "الحكومة" },
-      "143-00068": { value: 50, owner: "الحكومة" },
-      "143-00069": { value: 50, owner: "الحكومة" },
-
-      // 100 ريال (8 عملة)
-      "143-00070": { value: 100, owner: "الحكومة" },
-      "143-00071": { value: 100, owner: "الحكومة" },
-      "143-00072": { value: 100, owner: "الحكومة" },
-      "143-00073": { value: 100, owner: "الحكومة" },
-      "143-00074": { value: 100, owner: "الحكومة" },
-      "143-00075": { value: 100, owner: "الحكومة" },
-      "143-00076": { value: 100, owner: "الحكومة" },
-      "143-00077": { value: 100, owner: "الحكومة" },
-
-      // 500 ريال (2 عملة)
-      "143-00078": { value: 500, owner: "الحكومة" },
-      "143-00079": { value: 500, owner: "الحكومة" }
-    };
+      const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "سجل_التحويلات.csv";
+      a.click();
+    }
   </script>
-  
 </body>
 </html>
