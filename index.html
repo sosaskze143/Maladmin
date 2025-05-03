@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة العملات</title>
+    <link rel="stylesheet" href="style.css"> <!-- ربط ملف CSS -->
+</head>
+<body>
+    <h2>نظام إدارة العملات</h2>
+    <div>
+        <button class="button" onclick="showPage('transferPage')">نقل ملكية العملات</button>
+        <button class="button" onclick="showPage('searchPage')">البحث عن عملة</button>
+        <button class="button" onclick="showPage('exportPage')">تحميل السجلات</button>
+    </div>
+
+    <!-- صفحة نقل الملكية -->
+    <div id="transferPage" style="display:none;">
+        <h3>نقل ملكية العملة</h3>
+        <label for="serialNumber">رقم العملة:</label>
+        <input type="text" id="serialNumber" placeholder="143-XXXXX" maxlength="9">
+        <br><br>
+        <label for="currentOwner">المالك الحالي:</label>
+        <input type="text" id="currentOwner" disabled>
+        <br><br>
+        <label for="newOwner">المالك الجديد:</label>
+        <select id="newOwner">
+            <option value="الحكومة">الحكومة</option>
+            <option value="بيان سعد الشهراني">بيان سعد الشهراني</option>
+            <option value="وجدان سعد الشهراني">وجدان سعد الشهراني</option>
+            <option value="محمد سعد الشهراني">محمد سعد الشهراني</option>
+        </select>
+        <br><br>
+        <label for="adminPassword">رمز إداري:</label>
+        <input type="password" id="adminPassword" placeholder="أدخل كلمة المرور">
+        <br><br>
+        <button class="button" onclick="transferOwnership()">نقل الملكية</button>
+        <p class="alert" id="transferAlert"></p>
+    </div>
+
+    <!-- صفحة البحث عن عملة -->
+    <div id="searchPage" style="display:none;">
+        <h3>البحث عن عملة</h3>
+        <label for="searchSerial">رقم العملة:</label>
+        <input type="text" id="searchSerial" placeholder="143-XXXXX" maxlength="9">
+        <button class="button" onclick="searchCurrency()">بحث</button>
+        <p id="searchResult"></p>
+    </div>
+
+    <!-- صفحة تحميل السجلات -->
+    <div id="exportPage" style="display:none;">
+        <h3>تحميل السجلات</h3>
+        <button class="button" onclick="exportToCSV()">تحميل جميع السجلات كـ CSV</button>
+        <p class="alert" id="exportAlert"></p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- ربط مكتبة PDF -->
+    <script src="app.js"></script> <!-- ربط ملف JavaScript -->
+</body>
+</html>
