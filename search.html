@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>بحث وسجل العمليات</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>سجل العمليات</h1>
+
+  <input type="text" id="searchInput" placeholder="ابحث برقم العملة مثل: 143-12345">
+  <button onclick="search()">بحث</button>
+  <button onclick="downloadCSV()">تحميل السجل CSV</button>
+
+  <div id="results"></div>
+
+  <p><a href="index.html">الرجوع إلى صفحة نقل الملكية</a></p>
+
+  <script src="search.js"></script>
+</body>
+</html>
