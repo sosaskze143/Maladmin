@@ -1,0 +1,44 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f2f2f2;
+  padding: 40px;
+  direction: rtl;
+  text-align: right;
+}
+
+form {
+  background: white;
+  padding: 20px;
+  border: 1px solid #ddd;
+  max-width: 400px;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+}
+
+button {
+  background: #2980b9;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1f5f88;
+}
+
+#alert {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
